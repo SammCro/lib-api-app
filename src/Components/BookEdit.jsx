@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function BookEdit( {book, onUpdateHandle, edits: {onEdit, setOnEdit}}){
+function BookEdit( {book, onSubmit}){
     const [title, setTitle] = useState(book.title);
 
     const handleChange = (e) => {
@@ -9,16 +9,15 @@ function BookEdit( {book, onUpdateHandle, edits: {onEdit, setOnEdit}}){
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-        onUpdateHandle(book.id, title);
-        setOnEdit(!onEdit);
+        onSubmit(book.id, title);
     }
 
     return(
         <div>
-            <form onSubmit={onHandleSubmit}>
+            <form onSubmit={onHandleSubmit} className="book-edit">
                 <label htmlFor="update">Title</label>
-                <input type="text" id="update" value={title} onChange={handleChange} />
-                <button>Save</button>
+                <input type="text" id="update" value={title} onChange={handleChange} className="input" />
+                <button className='button is-primary'>Save</button>
             </form>
 
         </div> 
