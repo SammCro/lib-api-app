@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import BookCreate from './Components/BookCreate';
 import BookList from './Components/BookList';
 import axios from 'axios';
-import componentDidMount from 'react';
 
 function App() {
     const [books, setBooks] = useState([]); // books is an array of objects
@@ -20,18 +19,23 @@ function App() {
     }
 
 
-    const deleteBook = (id) => {
+    const deleteBook =  async (id) => {
+        await axios.delete(`http://localhost:3004/books/${id}`);
+
         const updatedBooks = books.filter((book) => book.id !== id);
         setBooks(updatedBooks);
     }
 
-    const updateBook = (id, title) => {
+    const updateBook = async (id, title) => {
+        const response = await axios.put(`http://localhost:3004/books/${id}`, {title});
+
         const updatedBooks = books.map((book) => {
-            if(book.id === id){
-                return {...book, title};
+            if (book.id === id) {
+                return response.data;
             }
             return book;
-        })
+        });
+    
         setBooks(updatedBooks);
     }
 
